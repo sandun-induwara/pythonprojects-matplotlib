@@ -1,0 +1,52 @@
+from turtle import color
+from matplotlib import pyplot as plt
+import numpy as np
+import random
+from collections import Counter
+import pandas as pd
+from matplotlib.animation import FuncAnimation
+
+
+# line chart
+def language_popularity():
+    data = pd.read_csv('data.csv')
+    counter = Counter()
+    
+    for i in data['LanguagesWorkedWith']:
+        counter.update(i.split(';'))
+        
+    x, y = zip(*[[key, value] for key, value in counter.items()])
+
+    fig, ax = plt.subplots()
+    ax.plot(x, y)
+    ax.set_title('Programming languages popularity')
+    fig.show()
+
+
+def coder_salary():
+    age = np.arange(20, 50)
+    random.seed(10)                                                         # this makes random numbers static in each execution
+    py_salary = [random.randint(1000, 4000) for i in range(30)]             # this list is contant in each execution    
+    ot_salary = np.random.randint(1500, 3500, size=30)                      # this list changes in each execution 
+    pr_salary = np.array(py_salary) + ot_salary
+
+    fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, sharex=True)
+
+    plt.style.use('classic')
+    ax1.plot(age, py_salary, color='#000000', label='python dev.')
+    ax1.plot(age, ot_salary, color='#0000FF', label='other dev.')
+    ax1.set_ylabel('salary')
+    ax1.set_title('Salary of programming developers with age')
+
+    #set limits for X and Y axes
+    ax1.set_ylim(ymin=0)
+    ax1.set_xlim(xmin=30)
+
+    ax1.grid()
+    ax1.legend(loc=(0.7,0))
+
+    ax2.plot(age, pr_salary, label="developers' salary", color='#FF0000')
+    ax2.set_xlabel('age')
+    ax2.legend(loc=(0.7, 0))
+    ax2.grid()
+    plt.show()
