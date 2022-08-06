@@ -1,4 +1,3 @@
-from turtle import color
 from matplotlib import pyplot as plt
 import numpy as np
 import random
@@ -20,7 +19,8 @@ def language_popularity():
     fig, ax = plt.subplots()
     ax.plot(x, y)
     ax.set_title('Programming languages popularity')
-    fig.show()
+    ax.set_xticklabels(x,rotation=90)
+    plt.show()
 
 
 def coder_salary():
@@ -43,7 +43,16 @@ def coder_salary():
     ax1.set_xlim(xmin=30)
 
     ax1.grid()
-    ax1.legend(loc=(0.7,0))
+    ax1.fill_between(age, py_salary, ot_salary, label='python dominates', color='#FF0000', where=(py_salary>ot_salary))
+    ax1.fill_between(age, py_salary, ot_salary, label='others dominate', color='#0000F3', where=(ot_salary>=py_salary),interpolate=True) #if interpolation is false whole area between charts not filled as ....
+    ax1.legend(loc=(0.7,0))                                                   # show line labels 
+    ax2.plot(age, pr_salary, label="developers' salary", color='#FF0000', linestyle='-')
+    ax2.set_xlabel('age')
+    ax2.legend(loc=(0.6, 0))
+    ax2.grid()
+    plt.tight_layout()                                                          # tighten the whole components(legends, labels) to window  
+    plt.show()
+    
 
     ax2.plot(age, pr_salary, label="developers' salary", color='#FF0000')
     ax2.set_xlabel('age')
